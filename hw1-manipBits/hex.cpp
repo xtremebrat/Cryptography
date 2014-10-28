@@ -46,7 +46,7 @@ for(i=length-1;i>=0;i--)
           break;
       case 15:
           //cout<<"f";
-		  str+="f";
+		  str+="f"; 
           break;
       default :
 		 qw[0] = rem[i] + '0';
