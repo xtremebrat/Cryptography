@@ -15,4 +15,4 @@ arguments could be files
 in case enter is hit after the choice , then the stdin is invoked and the user will have to enter input and then hit enter again.
 
 gmake clean - will remove all object files created.
-error messages are prompted when apt. 
+error messages are prompted when apt.  
