@@ -41,7 +41,7 @@ int main ( int argc, char *argv[] )
 	  tempFile.open (tFileName);
 	  tempFile << contents;
 	  tempFile.close(); dec64(tFileName);getchar(); remove(tFileName);return 0; }
-	  else {remove(tFileName); fputs("Invalid Input\n",stderr); return 0; }
+	  else {remove(tFileName); fputs("Invalid Input\n",stderr); return 0; } 
   }
  
 //
