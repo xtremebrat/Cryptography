@@ -1,0 +1,18 @@
+Readme File For Homework1 (hexdump,base 64 encoding and decoding)
+
+Consists of 4 seperate programs , each functionality capable of standing alone. 
+hex.cpp is for the hexdump, hex.o corresponding object file
+enc.cpp is for the encoding, enc.o corresponding object file
+dec.cpp is for the decoding, dec.o corresponding object file
+mainp.cpp is the program that calls the necessary function, mainp.o corresponding object file
+
+A makefile "makefile" is created and used as :
+gmake
+
+hw1 is the final object file.
+hw1 (hexdump/enc-base64/dec-base64) arguments
+arguments could be files 
+in case enter is hit after the choice , then the stdin is invoked and the user will have to enter input and then hit enter again.
+
+gmake clean - will remove all object files created.
+error messages are prompted when apt. 
