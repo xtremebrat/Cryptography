@@ -1,0 +1,92 @@
+Readme File For Homework4 (cryptanalysis)
+
+Consists of 6 seperate programs , each functionally capable of standing alone. 
+keygen.cpp is for generating the random keyfile for a specifieed period . ( timeofday used as the seed with lrand , hence similar keys might be generated within a small time frame. Professor Cheng explained that this would happen and is acceptable for our program)
+invkey.cpp is for creatin inverse permutation key from keyfile .
+encode2.cpp is for encrypting or decrypting .
+histo.cpp is used to create the histogram for the input.
+solve.cpp to determine period of a cphertext encrypted by a full viginere cipher.
+linkProg.cpp acts as the driver for all the programs and calls the respective one based on the input provided.
+
+A makefile "makefile" is created and used as :
+gmake
+(I have mailed Professor Cheng and asked him if my make file gmake was accepted, he accepted it stating " variations in makefile are allowed")
+gmake clean - will remove all object files created.
+
+hw4 is the final object file.
+command line should be formed as : 
+
+hw4 keygen -t=period
+hw4 ecrypt -k=keyfile [file] // note "ecrypt" insteaad of "crypt"
+hw4 invkey keyfile
+hw4 histo -t=period -i=which [file]
+hw4 solve -l=max_t file
+	
+error messages are prompted when apt.
+
+ Use
+	- Compile with:
+		make hw4
+	- Generate a keyfile with a specified period
+		./hw4 keygen -t=period
+	- Encrypts (or decrypts) an input ASCII text file
+		./hw4 crypt -k=keyfile [file]
+	- Create an inverse permutation key file from keyfile
+		./hw4 invkey keyfile
+	- Produce a histogram of ciphertext character frequencies
+		./hw4 histo -t=period -i=which [file]
+	- Analyze an input ciphertext through three different methods
+		./hw4 solve -l=max_t file
+	- Clean binary files with:
+		make clean
+
+ Design
+	- Keygen
+		- Generate a random mini-key, seeded from the current time
+		- Iterate through each letter of alphabet:
+			- Choose next index based off letters in the key
+			- Swap the current letter with the index made above
+		- Print the current shuffled alphabet
+		- Repeat until 'period' rows have been printed
+	- Crypt
+		- Seek to end of keyfile to determine how long it is
+		- Verify that the keyfile has a valid number of characters in it
+		- Read keyfile into buffer and verify its contents
+		- Iterate through the input text, char by char
+		- Apply permuation function to the char if necessary
+		- Increment to next perm. function and repeat for all chars
+	- Invkey
+		- Read in a text file, row by row
+		- Read a character from that row
+		- Identify what position that char should be in, write next letter there
+		- Repeat with all chars in all rows
+	- Histo
+		- Seek to first character to read
+		- Read 'period' bytes from file, 
+		- Take first letter read and add to char count
+		- Use basic selection sort to pick out the most frequent letters
+		- Print the letters and count in order
+	- Solve
+		- Read in entire input file into char buffer
+		- Kasiski Analysis
+			- Read word_len bytes from input buffer
+			- If they're not all lowercase letters, skip it
+			- If they are, iterate through all remaining bytes after current index
+			- If you find another string of word_len bytes that matches the one found above
+				- Print the desired output (length, index of each, difference between, string)
+			- Repeat process until you've searched all of the strings in the input
+			- If you found at least one match above, repeat the whole process with word_len++
+		- Index of Correlation Analysis
+			- Iterate through the entire file, counting how many of each letter there are
+			- Print the result counts for each letter
+			- Calculate Index of Correlation using equation from book
+				- Essentially take summation of each letter count multiplied by (itself-1)
+				  and divide by (L*(L-1)), where L is number of letters in file
+			- Calculate Expected Index of Correlation for each period length up to max_t
+				- Also from equation in book, shown above
+		- Auto-correlation Analysis
+			- Iterate through entire ciphertext file
+			- For each character, check if text[i] and text[i+per] are both letters
+			- If they are, check if they match
+			- If they're the same letter, increment correlated match count
+			- Print output displaying number of matches for each period
